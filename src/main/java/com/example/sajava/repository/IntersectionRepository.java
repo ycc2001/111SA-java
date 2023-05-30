@@ -14,10 +14,17 @@ public class IntersectionRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void insertIntersection(IntersectionModel intersectionModel) {
+    public String insertIntersection(IntersectionModel intersectionModel) {
         System.out.println("add intersection");
-        String sql = "INSERT  INTO intersection(road_id, locationX, locationY) VALUES(?, ?, ?)";
-        jdbcTemplate.update(sql, intersectionModel.getRoadId(), intersectionModel.getLocationX(), intersectionModel.getLocationY());
+        String sql = "INSERT  INTO intersection(road_id, location_x, location_y) VALUES(?, ?, ?)";
+        try{
+            jdbcTemplate.update(sql, intersectionModel.getRoadId(), intersectionModel.getLocationX(), intersectionModel.getLocationY());
+            return  "insert success";
+        }catch (Exception e){
+            System.out.println(e);
+            return e.toString();
+        }
+
     }
 
     public Map<String, Object> selectIntersection(int id){

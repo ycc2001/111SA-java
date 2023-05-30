@@ -13,8 +13,8 @@ public class IntersectionService {
     @Autowired
     IntersectionRepository intersectionRepository;
 
-    public void add(IntersectionModel intersectionModel) {
-        intersectionRepository.insertIntersection(intersectionModel);
+    public String add(IntersectionModel intersectionModel) {
+        return intersectionRepository.insertIntersection(intersectionModel);
     }
 
     public Map<String, Object> search(int id) {

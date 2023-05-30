@@ -10,15 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
-
 @ResponseStatus(HttpStatus.ACCEPTED)
 @RestController
 @RequestMapping(value = "intersection", produces = "application/json")
 public class IntersectionController {
-    final String statusCode = "statusCode", response = "response";
-
-
     @Autowired
     IntersectionModel intersectionModel;
 
@@ -27,14 +22,7 @@ public class IntersectionController {
 
     @PostMapping("add")
     public ResponseEntity<Map<String, Object>> add(@RequestBody IntersectionModel intModel){
-        Data data = new Data(200, "insert success");
-
-        intersectionModel = new IntersectionModel();
-        intersectionModel.setRoadId(intModel.getRoadId());
-        intersectionModel.setLocationX(intModel.getLocationX());
-        intersectionModel.setLocationY(intModel.getLocationY());
-
-        intersectionService.add(intModel);
+        Data data = new Data(200, intersectionService.add(intModel));
 
         return data.getResponse();
     }
