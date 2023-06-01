@@ -24,35 +24,35 @@ public class IntersectionController {
 
     @PostMapping("add")
     public ResponseEntity<Map<String, Object>> add(@RequestBody IntersectionModel intModel){
-        data = new Data(200, intersectionService.add(intModel));
+        data = intersectionService.add(intModel);
 
         return data.getResponse();
     }
 
     @PostMapping("del")
     public ResponseEntity<Map<String, Object>> del(@RequestBody Map<String, Object> reqBody){
-        data = new Data(200, intersectionService.del((Integer) reqBody.get("roadId")));
+        data = intersectionService.del((Integer) reqBody.get("roadId"));
 
         return data.getResponse();
     }
 
     @PostMapping("update")
     public ResponseEntity<Map<String, Object>> update(@RequestBody Map<String, Object> reqBody){
-        data = new Data(200, intersectionService.update(reqBody));
+        data = intersectionService.update(reqBody);
 
         return data.getResponse();
     }
 
     @GetMapping("search")
     public ResponseEntity<Map<String, Object>> search(@RequestParam int id){
-        data = new Data(200, intersectionService.search(id));
+        data = intersectionService.search(id);
 
         return data.getResponse();
     }
 
     @GetMapping("all")
     public ResponseEntity<Map<String, Object>> all(){
-        data = new Data(200, intersectionService.all());
+        data = intersectionService.all();
 
         return data.getResponse();
     }

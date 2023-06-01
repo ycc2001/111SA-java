@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("schedule")
+@RequestMapping(value = "schedule", produces = "application/json")
 public class ScheduleController {
     @Autowired
     ScheduleModel scheduleModel;

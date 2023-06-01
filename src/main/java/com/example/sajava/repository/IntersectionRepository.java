@@ -1,5 +1,6 @@
 package com.example.sajava.repository;
 
+import com.example.sajava.Data;
 import com.example.sajava.model.IntersectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,59 +15,76 @@ public class IntersectionRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public String insertIntersection(IntersectionModel intersectionModel) {
+    Data data;
+
+    public Data insertIntersection(IntersectionModel intersectionModel) {
         System.out.println("add intersection");
         String sql = "INSERT  INTO intersection(road_id, location_x, location_y) VALUES(?, ?, ?)";
-        try{
+        try {
             jdbcTemplate.update(sql, intersectionModel.getRoadId(), intersectionModel.getLocationX(), intersectionModel.getLocationY());
-            return  "insert success";
-        }catch (Exception e){
-            System.out.println(e);
-            return e.toString();
+            data = new Data(200, "insert success");
+            return data;
+        } catch (Exception e) {
+            data = new Data(400, e.toString());
+            return data;
         }
 
     }
 
-    public String delIntersection(int roadId){
-        System.out.println("delet intersection");
+    public Data delIntersection(int roadId) {
+        System.out.println("delete intersection");
         String sql = "DELETE FROM intersection WHERE road_id = ?";
 
         try {
             jdbcTemplate.update(sql, roadId);
-            return "delete success";
-        }catch (Exception e){
-            System.out.println(e);
-            return e.toString();
+            data = new Data(200, "delete success");
+            return data;
+        } catch (Exception e) {
+            data = new Data(400, e.toString());
+            return data;
         }
     }
 
-    public Map<String, Object> updateIntersection(Map<String, Object> reqBody){
+    public Data updateIntersection(Map<String, Object> reqBody) {
+        System.out.println("update intersection");
         final String jsonKey[] = {"locationX", "locationY"};
         final String sqlAttribute[] = {"location_x", "location_y"};
 
         String sql;
-        int id = (int)reqBody.get("roadId");
+        int id = (int) reqBody.get("roadId");
 
-        for(int i = 0; i < jsonKey.length; i++){
+        for (int i = 0; i < jsonKey.length; i++) {
             String s = jsonKey[i];
-            if(reqBody.get(s) != null){
+            if (reqBody.get(s) != null) {
+                System.out.println(String.format("update %s", jsonKey[i]));
                 sql = "UPDATE intersection SET " + sqlAttribute[i] + " = ? WHERE road_id = ?";
-                jdbcTemplate.update(sql, reqBody.get(s), id);
+                try{
+                    jdbcTemplate.update(sql, reqBody.get(s), id);
+                }catch (Exception e){
+                    data = new Data(400, e.toString());
+                }
+
             }
         }
 
-        return jdbcTemplate.queryForMap("SELECT * FROM intersection WHERE road_id = ?", id);
+        data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM intersection WHERE road_id = ?", id));
+        return data;
     }
 
-    public Map<String, Object> selectIntersection(int id){
+    public Data selectIntersection(int id) {
         System.out.println("search intersection");
         String sql = "SELECT * FROM intersection WHERE road_id = ?";
-        return jdbcTemplate.queryForMap(sql, id);
+
+        data = new Data(200, jdbcTemplate.queryForMap(sql, id));
+        return data;
     }
-    public List<Map<String, Object>> selectAllIntersection() {
+
+    public Data selectAllIntersection() {
         System.out.println("all intersection");
 
-        return jdbcTemplate.queryForList("SELECT * FROM intersection");
+        data = new Data(200, jdbcTemplate.queryForList("SELECT * FROM intersection"));
+
+        return data;
     }
 
 }

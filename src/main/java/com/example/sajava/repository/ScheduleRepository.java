@@ -24,7 +24,6 @@ public class ScheduleRepository {
             data = new Data(200, "insert success");
             return data;
         }catch (Exception e){
-            System.out.println(e);
             data = new Data(400, e.toString());
             return data;
         }

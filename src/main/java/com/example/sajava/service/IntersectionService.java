@@ -1,5 +1,6 @@
 package com.example.sajava.service;
 
+import com.example.sajava.Data;
 import com.example.sajava.model.IntersectionModel;
 import com.example.sajava.repository.IntersectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +14,23 @@ public class IntersectionService {
     @Autowired
     IntersectionRepository intersectionRepository;
 
-    public String add(IntersectionModel intersectionModel) {
+    public Data add(IntersectionModel intersectionModel) {
         return intersectionRepository.insertIntersection(intersectionModel);
     }
 
-    public String del(int roadId){
+    public Data del(int roadId){
         return intersectionRepository.delIntersection(roadId);
     }
 
-    public Map<String, Object> update(Map<String, Object> reqBody){
+    public Data update(Map<String, Object> reqBody){
         return intersectionRepository.updateIntersection(reqBody);
     }
 
-    public Map<String, Object> search(int id) {
+    public Data search(int id) {
         return intersectionRepository.selectIntersection(id);
     }
 
-    public List<Map<String, Object>> all() {
+    public Data all() {
         return intersectionRepository.selectAllIntersection();
     }
 }
