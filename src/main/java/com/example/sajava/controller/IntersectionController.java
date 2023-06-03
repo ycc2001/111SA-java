@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@ResponseStatus(HttpStatus.ACCEPTED)
+@CrossOrigin
 @RestController
 @RequestMapping(value = "intersection", produces = "application/json")
 public class IntersectionController {

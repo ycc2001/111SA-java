@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "traffic_record", produces = "application/json")
 public class TrafficRecordController {
