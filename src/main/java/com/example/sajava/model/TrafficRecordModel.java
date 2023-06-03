@@ -15,7 +15,7 @@ public class TrafficRecordModel {
     private double greenLightTime;
     private Timestamp startTime;
     private Boolean isEmergency;
-    private Blob liveVideo;
+    private String liveVideo;
 
     public String getTrafficRecordId() {
         return trafficRecordId;
@@ -41,7 +41,7 @@ public class TrafficRecordModel {
         return isEmergency;
     }
 
-    public Blob getLiveVideo() {
+    public String getLiveVideo() {
         return liveVideo;
     }
 
@@ -69,7 +69,7 @@ public class TrafficRecordModel {
         isEmergency = emergency;
     }
 
-    public void setLiveVideo(Blob liveVideo) {
+    public void setLiveVideo(String liveVideo) {
         this.liveVideo = liveVideo;
     }
 }
