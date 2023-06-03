@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -15,7 +14,7 @@ public class IntersectionRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    Data data;
+    private static Data data;
 
     public Data insertIntersection(IntersectionModel intersectionModel) {
         System.out.println("add intersection");
