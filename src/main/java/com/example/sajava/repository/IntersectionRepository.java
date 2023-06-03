@@ -18,7 +18,7 @@ public class IntersectionRepository {
 
     public Data insertIntersection(IntersectionModel intersectionModel) {
         System.out.println("add intersection");
-        String sql = "INSERT  INTO intersection(intersection_id, location_x, location_y) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO intersection(intersection_id, location_x, location_y) VALUES(?, ?, ?)";
         try {
             jdbcTemplate.update(sql, intersectionModel.getIntersectionId(), intersectionModel.getLocationX(), intersectionModel.getLocationY());
             data = new Data(200, "insert success");
