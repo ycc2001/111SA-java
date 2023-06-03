@@ -38,11 +38,17 @@ public class Data {
         response = new LinkedHashMap<>();
         response.put(s, code);
 
+
         if(code/100 == 2) {
             response.put(r, data);
             return new ResponseEntity<>(response, HttpStatus.OK);
+        } else if (code/100 == 4) {
+            response.put(r, data);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } else {
+            response.put(r, "failed");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        else return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
     }
 }
