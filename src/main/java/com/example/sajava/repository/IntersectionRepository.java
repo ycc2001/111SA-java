@@ -18,15 +18,14 @@ public class IntersectionRepository {
     public Data insertIntersection(IntersectionModel intersectionModel) {
         System.out.println("add intersection");
         String sql = "INSERT  INTO intersection(intersection_id, location_x, location_y) VALUES(?, ?, ?)";
+
         try {
             jdbcTemplate.update(sql, intersectionModel.getIntersectionId(), intersectionModel.getLocationX(), intersectionModel.getLocationY());
             data = new Data(200, "insert success");
-            return data;
         } catch (Exception e) {
             data = new Data(400, e.toString());
-            return data;
         }
-
+        return data;
     }
 
     public Data delIntersection(String intersectionId) {
@@ -36,11 +35,11 @@ public class IntersectionRepository {
         try {
             jdbcTemplate.update(sql, intersectionId);
             data = new Data(200, "delete success");
-            return data;
         } catch (Exception e) {
             data = new Data(400, e.toString());
-            return data;
         }
+
+        return data;
     }
 
     public Data updateIntersection(Map<String, Object> reqBody) {
@@ -56,6 +55,7 @@ public class IntersectionRepository {
             if (reqBody.get(s) != null) {
                 System.out.println(String.format("update %s", jsonKey[i]));
                 sql = "UPDATE intersection SET " + sqlAttribute[i] + " = ? WHERE intersection_id = ?";
+
                 try{
                     jdbcTemplate.update(sql, reqBody.get(s), id);
                 }catch (Exception e){
@@ -65,7 +65,12 @@ public class IntersectionRepository {
             }
         }
 
-        data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM intersection WHERE intersection_id = ?", id));
+        try {
+            data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM intersection WHERE intersection_id = ?", id));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
 
@@ -73,14 +78,23 @@ public class IntersectionRepository {
         System.out.println("search intersection");
         String sql = "SELECT * FROM intersection WHERE intersection_id = ?";
 
-        data = new Data(200, jdbcTemplate.queryForMap(sql, intersectionId));
+        try{
+            data = new Data(200, jdbcTemplate.queryForMap(sql, intersectionId));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
 
     public Data selectAllIntersection() {
         System.out.println("all intersection");
 
-        data = new Data(200, jdbcTemplate.queryForList("SELECT * FROM intersection"));
+        try{
+            data = new Data(200, jdbcTemplate.queryForList("SELECT * FROM intersection"));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
 
         return data;
     }

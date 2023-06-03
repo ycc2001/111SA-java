@@ -16,37 +16,38 @@ public class CrossroadsRepository {
     JdbcTemplate jdbcTemplate;
 
     private static Data data;
-    public Data insertCrossroads(CrossroadsModel crossroadsModel){
+
+    public Data insertCrossroads(CrossroadsModel crossroadsModel) {
         System.out.println("insert crossroads");
         String sql = "INSERT INTO crossroads(intersection_id, road_id) VALUES(?, ?)";
-        Object[] value = new Object[] {crossroadsModel.getIntersectionId(), crossroadsModel.getRoadId()};
+        Object[] value = new Object[]{crossroadsModel.getIntersectionId(), crossroadsModel.getRoadId()};
 
-        try{
+        try {
             jdbcTemplate.update(sql, value);
             data = new Data(200, "insert success");
             return data;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             data = new Data(400, e.toString());
             return data;
         }
     }
 
-    public Data delCrossroads(CrossroadsModel crossroadsModel){
+    public Data delCrossroads(CrossroadsModel crossroadsModel) {
         System.out.println("delete crossroads");
-        String  sql = "DELETE FROM crossroads WHERE intersection_id = ? and road_id = ?";
+        String sql = "DELETE FROM crossroads WHERE intersection_id = ? and road_id = ?";
 
-        try{
+        try {
             jdbcTemplate.update(sql, crossroadsModel.getIntersectionId(), crossroadsModel.getRoadId());
             data = new Data(200, "delete success");
-            return data;
-        }catch (Exception e){
+        } catch (Exception e) {
             data = new Data(400, e.toString());
-            return data;
         }
+
+        return data;
     }
 
-    public Data selectCrossroads(Map<String, Object> reqBody){
+    public Data selectCrossroads(Map<String, Object> reqBody) {
         System.out.println("search ");
         final String jsonKey[] = {"intersectionId", "roadId"};
         final String sqlAttribute[] = {"intersection_id", "road_id"};
@@ -55,12 +56,12 @@ public class CrossroadsRepository {
         String sql;
         sql = "SELECT * FROM crossroads WHERE ";
 
-        for(int i = 0;  i < jsonKey.length; i++){
+        for (int i = 0; i < jsonKey.length; i++) {
             String s = jsonKey[i];
             String rBody = (String) reqBody.get(s);
 
-            if(rBody != null){
-                if(value.toArray().length > 0) sql += " and ";
+            if (rBody != null) {
+                if (value.toArray().length > 0) sql += " and ";
 
                 value.add(rBody);
 
@@ -68,15 +69,23 @@ public class CrossroadsRepository {
             }
         }
 
-        data = new Data(200, jdbcTemplate.queryForList(sql, value.toArray()));
+        try {
+            data = new Data(200, jdbcTemplate.queryForList(sql, value.toArray()));
+        } catch (Exception e) {
+            data = new Data(400, e.toString());
+        }
 
         return data;
     }
 
-    public Data selectAllCrossroads(){
+    public Data selectAllCrossroads() {
         System.out.println("select all");
 
-        data = new Data(200, jdbcTemplate.queryForList("SELECT * FROM crossroads"));
+        try {
+            data = new Data(200, jdbcTemplate.queryForList("SELECT * FROM crossroads"));
+        } catch (Exception e) {
+            data = new Data(400, e.toString());
+        }
 
         return data;
     }
