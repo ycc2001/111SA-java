@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping(value = "traffic_record", produces = "application/json")
 public class TrafficRecordController {
@@ -25,6 +25,27 @@ public class TrafficRecordController {
         data = trafficRecordService.add(trModel);
         return data.getResponse();
     }
+    @PostMapping("del")
+    public ResponseEntity<Map<String, Object>> del(@RequestBody Map<String, Object> reqBody){
+        data = trafficRecordService.del((String) reqBody.get("trafficRecordId"));
+
+        return data.getResponse();
+    }
+
+    @PostMapping("update")
+    public ResponseEntity<Map<String, Object>> update(@RequestBody Map<String, Object> reqBody){
+        data = trafficRecordService.update(reqBody);
+
+        return data.getResponse();
+    }
+
+    @GetMapping("search")
+    public ResponseEntity<Map<String, Object>> search(@RequestParam String trafficRecordId){
+        data = trafficRecordService.search(trafficRecordId);
+
+        return data.getResponse();
+    }
+
     @GetMapping("all")
     public ResponseEntity<Map<String, Object>> all(){
         data = trafficRecordService.all();

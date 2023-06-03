@@ -10,31 +10,26 @@ import java.sql.Timestamp;
 public class TrafficRecordModel {
     @Id
     private String trafficRecordId;
-    private String laneId;
     private String intersectionId;
-    private double trafficFlow;
-    private int greenLightTime;
+    private int trafficFlow;
+    private double greenLightTime;
     private Timestamp startTime;
     private Boolean isEmergency;
-    private Blob liveVideo;
+    private String liveVideo;
 
     public String getTrafficRecordId() {
         return trafficRecordId;
-    }
-
-    public String getLaneId() {
-        return laneId;
     }
 
     public String getIntersectionId() {
         return intersectionId;
     }
 
-    public double getTrafficFlow() {
+    public int getTrafficFlow() {
         return trafficFlow;
     }
 
-    public int getGreenLightTime() {
+    public double getGreenLightTime() {
         return greenLightTime;
     }
 
@@ -46,7 +41,7 @@ public class TrafficRecordModel {
         return isEmergency;
     }
 
-    public Blob getLiveVideo() {
+    public String getLiveVideo() {
         return liveVideo;
     }
 
@@ -54,19 +49,15 @@ public class TrafficRecordModel {
         this.trafficRecordId = trafficRecordId;
     }
 
-    public void setLaneId(String laneId) {
-        this.laneId = laneId;
-    }
-
     public void setIntersectionId(String intersectionId) {
         this.intersectionId = intersectionId;
     }
 
-    public void setTrafficFlow(double trafficFlow) {
+    public void setTrafficFlow(int trafficFlow) {
         this.trafficFlow = trafficFlow;
     }
 
-    public void setGreenLightTime(int greenLightTime) {
+    public void setGreenLightTime(double greenLightTime) {
         this.greenLightTime = greenLightTime;
     }
 
@@ -78,7 +69,7 @@ public class TrafficRecordModel {
         isEmergency = emergency;
     }
 
-    public void setLiveVideo(Blob liveVideo) {
+    public void setLiveVideo(String liveVideo) {
         this.liveVideo = liveVideo;
     }
 }
