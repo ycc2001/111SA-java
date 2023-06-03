@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
-@RequestMapping("")
+@RequestMapping(value = "", produces = "application/json")
 public class HttpRequestController {
     private static Data data;
     IdentifyTraffic identifyTraffic = new IdentifyTraffic();
