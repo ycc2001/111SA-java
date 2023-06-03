@@ -18,16 +18,16 @@ public class IntersectionService {
         return intersectionRepository.insertIntersection(intersectionModel);
     }
 
-    public Data del(int roadId){
-        return intersectionRepository.delIntersection(roadId);
+    public Data del(String intersectionId){
+        return intersectionRepository.delIntersection(intersectionId);
     }
 
     public Data update(Map<String, Object> reqBody){
         return intersectionRepository.updateIntersection(reqBody);
     }
 
-    public Data search(int id) {
-        return intersectionRepository.selectIntersection(id);
+    public Data search(String intersectionId) {
+        return intersectionRepository.selectIntersection(intersectionId);
     }
 
     public Data all() {

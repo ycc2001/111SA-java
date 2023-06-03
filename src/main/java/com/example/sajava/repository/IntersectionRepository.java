@@ -18,9 +18,9 @@ public class IntersectionRepository {
 
     public Data insertIntersection(IntersectionModel intersectionModel) {
         System.out.println("add intersection");
-        String sql = "INSERT  INTO intersection(road_id, location_x, location_y) VALUES(?, ?, ?)";
+        String sql = "INSERT  INTO intersection(intersection_id, location_x, location_y) VALUES(?, ?, ?)";
         try {
-            jdbcTemplate.update(sql, intersectionModel.getRoadId(), intersectionModel.getLocationX(), intersectionModel.getLocationY());
+            jdbcTemplate.update(sql, intersectionModel.getIntersectionId(), intersectionModel.getLocationX(), intersectionModel.getLocationY());
             data = new Data(200, "insert success");
             return data;
         } catch (Exception e) {
@@ -30,12 +30,12 @@ public class IntersectionRepository {
 
     }
 
-    public Data delIntersection(int roadId) {
+    public Data delIntersection(String intersectionId) {
         System.out.println("delete intersection");
-        String sql = "DELETE FROM intersection WHERE road_id = ?";
+        String sql = "DELETE FROM intersection WHERE intersection_id = ?";
 
         try {
-            jdbcTemplate.update(sql, roadId);
+            jdbcTemplate.update(sql, intersectionId);
             data = new Data(200, "delete success");
             return data;
         } catch (Exception e) {
@@ -50,13 +50,13 @@ public class IntersectionRepository {
         final String sqlAttribute[] = {"location_x", "location_y"};
 
         String sql;
-        int id = (int) reqBody.get("roadId");
+        String id = (String) reqBody.get("intersectionId");
 
         for (int i = 0; i < jsonKey.length; i++) {
             String s = jsonKey[i];
             if (reqBody.get(s) != null) {
                 System.out.println(String.format("update %s", jsonKey[i]));
-                sql = "UPDATE intersection SET " + sqlAttribute[i] + " = ? WHERE road_id = ?";
+                sql = "UPDATE intersection SET " + sqlAttribute[i] + " = ? WHERE intersection_id = ?";
                 try{
                     jdbcTemplate.update(sql, reqBody.get(s), id);
                 }catch (Exception e){
@@ -66,15 +66,15 @@ public class IntersectionRepository {
             }
         }
 
-        data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM intersection WHERE road_id = ?", id));
+        data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM intersection WHERE intersection_id = ?", id));
         return data;
     }
 
-    public Data selectIntersection(int id) {
+    public Data selectIntersection(String intersectionId) {
         System.out.println("search intersection");
-        String sql = "SELECT * FROM intersection WHERE road_id = ?";
+        String sql = "SELECT * FROM intersection WHERE intersection_id = ?";
 
-        data = new Data(200, jdbcTemplate.queryForMap(sql, id));
+        data = new Data(200, jdbcTemplate.queryForMap(sql, intersectionId));
         return data;
     }
 
