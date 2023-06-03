@@ -16,12 +16,13 @@ import java.util.Map;
 @RequestMapping("")
 public class HttpRequestController {
     private static Data data;
+    IdentifyTraffic identifyTraffic = new IdentifyTraffic();
     @GetMapping("car-number")
     public ResponseEntity<Map<String, Object>> countCar(@RequestParam int id){
-        IdentifyTraffic identifyTraffic = new IdentifyTraffic();
         Map<String, Object> requestBody = new LinkedHashMap<>();
         requestBody.put("roadId", id);
-        identifyTraffic.carNumber(requestBody);
+
+        data = new Data(200, identifyTraffic.carNumber(requestBody));
         return data.getResponse();
     }
 
