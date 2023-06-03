@@ -4,7 +4,6 @@ import com.example.sajava.Data;
 import com.example.sajava.model.IntersectionModel;
 import com.example.sajava.service.IntersectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

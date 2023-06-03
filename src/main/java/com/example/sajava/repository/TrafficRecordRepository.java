@@ -11,7 +11,7 @@ public class TrafficRecordRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    Data data;
+    private static Data data;
     public Data insertTrafficRecord(TrafficRecordModel trafficRecordModel){
         System.out.println("add Traffic record");
 

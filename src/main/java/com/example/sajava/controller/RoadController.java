@@ -4,16 +4,14 @@ import com.example.sajava.Data;
 import com.example.sajava.model.RoadModel;
 import com.example.sajava.service.RoadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@ResponseStatus(HttpStatus.ACCEPTED)
+@CrossOrigin
 @RestController
 @RequestMapping(value = "road", produces = "application/json")
-
 public class RoadController {
     @Autowired
     RoadModel roadModel;
