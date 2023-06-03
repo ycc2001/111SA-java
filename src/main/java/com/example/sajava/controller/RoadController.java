@@ -1,58 +1,58 @@
 package com.example.sajava.controller;
 
 import com.example.sajava.Data;
-import com.example.sajava.model.TrafficRecordModel;
-import com.example.sajava.service.TrafficRecordService;
+import com.example.sajava.model.RoadModel;
+import com.example.sajava.service.RoadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-//@CrossOrigin
+@CrossOrigin
 @RestController
-@RequestMapping(value = "traffic_record", produces = "application/json")
-public class TrafficRecordController {
+@RequestMapping(value = "road", produces = "application/json")
+public class RoadController {
     @Autowired
-    TrafficRecordModel trafficRecordModel;
+    RoadModel roadModel;
 
     @Autowired
-    TrafficRecordService trafficRecordService;
+    RoadService roadService;
 
     private static Data data;
+
     @PostMapping("add")
-    public ResponseEntity<Map<String, Object>> add(@RequestBody TrafficRecordModel trModel){
-        data = trafficRecordService.add(trModel);
+    public ResponseEntity<Map<String, Object>> add(@RequestBody RoadModel rModel){
+        data = roadService.add(rModel);
+
         return data.getResponse();
     }
+
     @PostMapping("del")
     public ResponseEntity<Map<String, Object>> del(@RequestBody Map<String, Object> reqBody){
-        data = trafficRecordService.del((String) reqBody.get("trafficRecordId"));
+        data = roadService.del((String) reqBody.get("roadId"));
 
         return data.getResponse();
     }
 
     @PostMapping("update")
     public ResponseEntity<Map<String, Object>> update(@RequestBody Map<String, Object> reqBody){
-        data = trafficRecordService.update(reqBody);
+        data = roadService.update(reqBody);
 
         return data.getResponse();
     }
 
     @GetMapping("search")
-    public ResponseEntity<Map<String, Object>> search(@RequestParam String trafficRecordId){
-        data = trafficRecordService.search(trafficRecordId);
+    public ResponseEntity<Map<String, Object>> search(@RequestParam String roadId){
+        data = roadService.search(roadId);
 
         return data.getResponse();
     }
 
     @GetMapping("all")
     public ResponseEntity<Map<String, Object>> all(){
-        data = trafficRecordService.all();
+        data = roadService.all();
 
         return data.getResponse();
     }
-
-
-
 }

@@ -4,13 +4,12 @@ import com.example.sajava.Data;
 import com.example.sajava.model.IntersectionModel;
 import com.example.sajava.service.IntersectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@ResponseStatus(HttpStatus.ACCEPTED)
+@CrossOrigin
 @RestController
 @RequestMapping(value = "intersection", produces = "application/json")
 public class IntersectionController {

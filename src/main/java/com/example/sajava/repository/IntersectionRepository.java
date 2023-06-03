@@ -10,7 +10,6 @@ import java.util.Map;
 
 @Repository
 public class IntersectionRepository {
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
