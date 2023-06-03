@@ -19,14 +19,15 @@ public class TrafficRecordRepository {
 
         String sql = "INSERT INTO traffic_record(traffic_record_id,intersection_id,traffic_flow,greenlight_time,start_time,is_emergency,live_video) VALUES(?, ?, ?, ?, ?, ?, ? )";
         Object[]value = {trafficRecordModel.getTrafficRecordId(),trafficRecordModel.getIntersectionId(),trafficRecordModel.getTrafficFlow(),trafficRecordModel.getGreenLightTime(),trafficRecordModel.getStartTime(),trafficRecordModel.getEmergency(),trafficRecordModel.getLiveVideo()};
+
         try{
             jdbcTemplate.update(sql, value);
             data = new Data(200, "insert success");
-            return data;
         }catch (Exception e){
             data = new Data(400, e.toString());
-            return data;
         }
+
+        return data;
     }
 
     public Data delTrafficRecord(String trafficRecordId) {
@@ -36,11 +37,11 @@ public class TrafficRecordRepository {
         try {
             jdbcTemplate.update(sql, trafficRecordId);
             data = new Data(200, "delete success");
-            return data;
         } catch (Exception e) {
             data = new Data(400, e.toString());
-            return data;
         }
+
+        return data;
     }
 
     public Data updateTrafficRecord(Map<String, Object> reqBody) {
@@ -56,6 +57,7 @@ public class TrafficRecordRepository {
             if (reqBody.get(s) != null) {
                 System.out.println(String.format("update %s", jsonKey[i]));
                 sql = "UPDATE traffic_record SET " + sqlAttribute[i] + " = ? WHERE traffic_record_id = ?";
+
                 try{
                     jdbcTemplate.update(sql, reqBody.get(s), id);
                 }catch (Exception e){
@@ -65,7 +67,12 @@ public class TrafficRecordRepository {
             }
         }
 
-        data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM traffic_record WHERE traffic_record_id = ?", id));
+        try {
+            data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM traffic_record WHERE traffic_record_id = ?", id));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
 
@@ -73,15 +80,23 @@ public class TrafficRecordRepository {
         System.out.println("search intersection");
         String sql = "SELECT * FROM traffic_record WHERE traffic_record_id = ?";
 
-        data = new Data(200, jdbcTemplate.queryForMap(sql, trafficRecordId));
+        try{
+            data = new Data(200, jdbcTemplate.queryForMap(sql, trafficRecordId));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
 
     public Data selectAllTrafficRecord(){
         String sql = "SELECT * FROM traffic_record";
 
-
-        data = new Data(200, jdbcTemplate.queryForList(sql));
+        try {
+            data = new Data(200, jdbcTemplate.queryForList(sql));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
 
         return data;
     }

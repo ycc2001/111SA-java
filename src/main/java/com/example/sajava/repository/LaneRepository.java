@@ -24,13 +24,12 @@ public class LaneRepository {
         try{
             jdbcTemplate.update(sql, value);
             data = new Data(200, "insert success");
-            return data;
         }catch (Exception e){
             System.out.println(e);
             data = new Data(400, e.toString());
-            return data;
         }
 
+        return data;
     }
     public Data delLane(String laneId) {
         System.out.println("delete lane");
@@ -39,11 +38,11 @@ public class LaneRepository {
         try {
             jdbcTemplate.update(sql, laneId);
             data = new Data(200, "delete success");
-            return data;
         } catch (Exception e) {
             data = new Data(400, e.toString());
-            return data;
         }
+
+        return data;
     }
 
     public Data updateLane(Map<String, Object> reqBody) {
@@ -68,7 +67,12 @@ public class LaneRepository {
             }
         }
 
-        data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM lane WHERE lane_id = ?", id));
+        try {
+            data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM lane WHERE lane_id = ?", id));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
 
@@ -76,14 +80,22 @@ public class LaneRepository {
         System.out.println("search lane");
         String sql = "SELECT * FROM lane WHERE lane_id = ?";
 
-        data = new Data(200, jdbcTemplate.queryForMap(sql, laneId));
+        try{
+            data = new Data(200, jdbcTemplate.queryForMap(sql, laneId));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
     public Data selectAllLane(){
         String sql = "SELECT * FROM lane";
 
-
-        data = new Data(200, jdbcTemplate.queryForList(sql));
+        try{
+            data = new Data(200, jdbcTemplate.queryForList(sql));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
 
         return data;
     }

@@ -19,15 +19,15 @@ public class RoadRepository {
     public Data insertRoad(RoadModel roadModel) {
         System.out.println("add road");
         String sql = "INSERT  INTO road(road_id, lane_id, road_name) VALUES(?, ?, ?)";
+
         try {
             jdbcTemplate.update(sql, roadModel.getRoadId(), roadModel.getLaneId(), roadModel.getRoadName());
             data = new Data(200, "road success");
-            return data;
         } catch (Exception e) {
             data = new Data(400, e.toString());
-            return data;
         }
 
+        return data;
     }
 
     public Data delRoad(String roadId) {
@@ -37,11 +37,11 @@ public class RoadRepository {
         try {
             jdbcTemplate.update(sql, roadId);
             data = new Data(200, "delete success");
-            return data;
         } catch (Exception e) {
             data = new Data(400, e.toString());
-            return data;
         }
+
+        return data;
     }
 
     public Data updateRoad(Map<String, Object> reqBody) {
@@ -57,16 +57,21 @@ public class RoadRepository {
             if (reqBody.get(s) != null) {
                 System.out.println(String.format("update %s", jsonKey[i]));
                 sql = "UPDATE road SET " + sqlAttribute[i] + " = ? WHERE road_id = ?";
+
                 try{
                     jdbcTemplate.update(sql, reqBody.get(s), id);
                 }catch (Exception e){
                     data = new Data(400, e.toString());
                 }
-
             }
         }
 
-        data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM road WHERE road_id = ?", id));
+        try {
+            data = new Data(200, jdbcTemplate.queryForMap("SELECT * FROM road WHERE road_id = ?", id));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
 
@@ -74,14 +79,23 @@ public class RoadRepository {
         System.out.println("search road");
         String sql = "SELECT * FROM road WHERE road_id = ?";
 
-        data = new Data(200, jdbcTemplate.queryForMap(sql, roadId));
+        try {
+            data = new Data(200, jdbcTemplate.queryForMap(sql, roadId));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
+
         return data;
     }
 
     public Data selectAllRoad() {
         System.out.println("all road");
 
-        data = new Data(200, jdbcTemplate.queryForList("SELECT * FROM road"));
+        try {
+            data = new Data(200, jdbcTemplate.queryForList("SELECT * FROM road"));
+        }catch (Exception e){
+            data = new Data(400, e.toString());
+        }
 
         return data;
     }

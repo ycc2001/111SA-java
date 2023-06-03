@@ -50,7 +50,7 @@ public class CrossroadsController {
     public ResponseEntity<Map<String, Object>> all() {
 
         data = crossroadsService.all();
-        
+
         return data.getResponse();
     }
 }
