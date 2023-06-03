@@ -22,7 +22,7 @@ public class HttpRequestController {
         Map<String, Object> requestBody = new LinkedHashMap<>();
         requestBody.put("roadId", id);
 
-        data = new Data(200, identifyTraffic.carNumber(requestBody));
+        data = identifyTraffic.carNumber(requestBody);
         return data.getResponse();
     }
 
