@@ -20,7 +20,7 @@ public class IntersectionController {
     @Autowired
     IntersectionService intersectionService;
 
-    static Data data;
+    private static Data data;
 
     @PostMapping("add")
     public ResponseEntity<Map<String, Object>> add(@RequestBody IntersectionModel intModel){
