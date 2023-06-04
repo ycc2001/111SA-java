@@ -11,7 +11,7 @@ public class IdentifyTraffic {
     private static Data data;
 
     public Data carNumber(Map<String, Object> requestBody){
-        String url = "http://localhost:3000/road-veiw";
+        String url = "http://localhost:3000/road-view";
         Map<String, Object> responseBody = restTemplate.postForObject(url, requestBody, Map.class );
         data = new Data(200, responseBody.get("response"));
         return data;
