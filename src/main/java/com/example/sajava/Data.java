@@ -51,4 +51,8 @@ public class Data {
         }
 
     }
+
+    public Object getResult(){
+        return this.data;
+    }
 }
