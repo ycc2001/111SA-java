@@ -16,4 +16,17 @@ public class IdentifyTraffic {
         data = new Data(200, responseBody.get("response"));
         return data;
     }
+
+    public boolean emergencyCar(){
+        String url = "http://localhost:3000/road-view";
+        boolean response = false;
+        try{
+            if(restTemplate.getForObject(url, boolean.class)) response = true;
+        }catch (Exception e){
+            response = false;
+        }
+
+
+        return response;
+    }
 }

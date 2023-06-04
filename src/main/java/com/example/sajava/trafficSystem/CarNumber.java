@@ -1,7 +1,6 @@
-package com.example.sajava.controller;
+package com.example.sajava.trafficSystem;
 
 import com.example.sajava.Data;
-import com.example.sajava.trafficSystem.IdentifyTraffic;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,8 +9,8 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "", produces = "application/json")
-public class HttpRequestController {
+@RequestMapping(value = "identify", produces = "application/json")
+public class CarNumber {
     private static Data data;
     IdentifyTraffic identifyTraffic = new IdentifyTraffic();
     @GetMapping("car-number")
