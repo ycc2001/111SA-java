@@ -16,6 +16,12 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "time", produces = "application/json")
 public class TimeCalculator {
+    final String[] lane = {"L01", "L02", "L03", "L04"};
+    final List<String> laneList = Arrays.stream(lane).toList();
+    final int[] cArray = {110, 70, 40, 30};
+    final int[] upperArray = {130, 90, 60, 50};
+    final int[] lowerArray = {90, 50, 20, 10};
+
     @Autowired
     TimeRequest timeRequest;
     @Autowired
@@ -24,12 +30,6 @@ public class TimeCalculator {
     private static Data data;
     @PostMapping("calculator")
     private ResponseEntity<Map<String, Object>> calculator(@RequestBody TimeRequest tRequest){
-        final String[] lane = {"L01", "L02", "L03", "L04"};
-        final List<String> laneList = Arrays.stream(lane).toList();
-        final int[] cArray = {3, 3, 10, 10};
-        final int[] upperArray = {130, 90, 60, 50};
-        final int[] lowerArray = {90, 50, 20, 10};
-
         Map<String, Object> roadInfo = calculatorService.roadInfo(tRequest);
         IdentifyTraffic identifyTraffic = new IdentifyTraffic();
 
@@ -69,11 +69,6 @@ public class TimeCalculator {
         tRequest.setIntersectionId(intersectionId);
         tRequest.setIsNS(isNS);
 
-        final String[] lane = {"L01", "L02", "L03", "L04"};
-        final List<String> laneList = Arrays.stream(lane).toList();
-        final int[] cArray = {30, 30, 10, 10};
-        final int[] upperArray = {130, 90, 60, 50};
-        final int[] lowerArray = {90, 50, 20, 10};
 
         Map<String, Object> roadInfo = calculatorService.roadInfo(tRequest);
         IdentifyTraffic identifyTraffic = new IdentifyTraffic();
@@ -88,7 +83,7 @@ public class TimeCalculator {
 
         int c = cArray[laneIndex];
 
-        lightTime = ((((double) carNum * (double) carNum) * (double) c) + (15.0 * (double) carNum)) / (500 * (double)roadLength);
+        lightTime = c * (carNum / (roadLength));
         System.out.println(c);
         System.out.println(carNum);
         System.out.println(roadLength);
